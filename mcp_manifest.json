@@ -1,0 +1,116 @@
+{
+  "server": "ticket-tool-server",
+  "version": "1.0.0",
+  "role": "it_support_agent",
+  "tools": [
+    {
+      "name": "get_ticket",
+      "description": "Look up a single support ticket by ID. Read-only.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "ticket_id": {
+            "type": "string",
+            "pattern": "^T-[0-9]{4}$",
+            "description": "Ticket ID, e.g. T-1001"
+          }
+        },
+        "required": [
+          "ticket_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "search_tickets",
+      "description": "Search tickets, optionally filtered. Read-only.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "department": {
+            "type": "string",
+            "description": "Department name filter"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "in_progress",
+              "resolved",
+              "closed"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "update_ticket_status",
+      "description": "Change a ticket's status. WRITE operation: requires confirmation and department authorization.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "ticket_id": {
+            "type": "string",
+            "pattern": "^T-[0-9]{4}$"
+          },
+          "new_status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "in_progress",
+              "resolved",
+              "closed"
+            ]
+          },
+          "confirmed": {
+            "type": "boolean",
+            "description": "Must be true: the caller explicitly confirmed this write"
+          }
+        },
+        "required": [
+          "ticket_id",
+          "new_status",
+          "confirmed"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_ticket",
+      "description": "Open a new ticket. WRITE operation: requires confirmation and department authorization.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 120
+          },
+          "department": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "confirmed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "title",
+          "department",
+          "priority",
+          "confirmed"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}
