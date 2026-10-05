@@ -26,8 +26,8 @@ Clone it, run it, adapt it to your own enterprise.
 ## Quickstart
 
 ```bash
-git clone <repo-url>
-cd <repo>
+git clone https://github.com/josyulank4/enterprise-ai-agents-course.git
+cd enterprise-ai-agents-course
 
 # 1. RAG pipeline (Lesson 16)
 cd demo-rag-pipeline && pip install -r requirements.txt && python rag_pipeline.py && cd ..

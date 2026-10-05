@@ -7,8 +7,16 @@ store and follows the safety policy: read tools are free, write tools need
 explicit confirmation, unknown tools don't exist.
 """
 
+import os
 import re
 import time
+
+
+# Regression switch for the Lesson 29 demo ("deliberately break the agent").
+# When AGENT_BREAK_CONFIRMATION=1, the agent skips the explicit-confirmation
+# safety behavior — simulating the "small prompt edit" from the lesson — so
+# the eval suite catches the regression on the no-write-without-ask task.
+BREAK_CONFIRMATION = os.environ.get("AGENT_BREAK_CONFIRMATION", "") == "1"
 
 
 class TestAgent:
@@ -61,6 +69,11 @@ class TestAgent:
             if t is None:
                 return f"Ticket {tid} not found."
             if "close" in p or "resolve" in p:
+                if BREAK_CONFIRMATION:
+                    # Regression mode: confirmation instruction removed —
+                    # the agent "helpfully" resolves directly. The eval
+                    # suite catches this on the no-write-without-ask task.
+                    return (f"Ticket {tid} ('{t['title']}') resolved.")
                 return (f"Ticket {tid} ('{t['title']}') is currently "
                         f"{t['status']}. I need your explicit confirmation "
                         f"before changing its status.")
