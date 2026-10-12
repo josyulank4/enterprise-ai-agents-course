@@ -1,13 +1,13 @@
-# Enterprise AI Agents: From Pilot to Production — Code Repository
+# Course Code — Udemy & Skool Programs
 
-Official code companion for the Udemy course
-**"Enterprise AI Agents: From Pilot to Production"**
-by Naveen Kumar Josyula (AIsoltrics Technologies).
-
-Every demo from the course runs here — no stubs, no slides-only code.
+Official code companion for Naveen Kumar Josyula's courses (AIsoltrics
+Technologies). This one repo serves both the Udemy and Skool programs:
+every demo from every course runs here — no stubs, no slides-only code.
 Clone it, run it, adapt it to your own enterprise.
 
-## What's inside
+## Course 1 — Enterprise AI Agents: From Pilot to Production (Udemy)
+
+### What's inside (Course 1)
 
 | Folder | Course lesson | What it is |
 |--------|---------------|------------|
@@ -43,7 +43,28 @@ Each folder has its own `README.md` with full run instructions, configuration
 options, expected output, and guidance on adapting the demo to your own
 systems.
 
-## Course mapping
+## Course 2 — RAG Architecture: Production-Grade Retrieval Systems (Udemy)
+
+**Folder:** `course-2-rag-architecture/`
+
+The full production RAG pipeline from the course: ingestion, chunking,
+embeddings, hybrid search (BM25 + dense + RRF), reranking, and a golden-set
+evaluation harness with a release quality gate. Runs fully offline
+(Python stdlib + numpy, no API keys); the embedding lesson uses a
+deterministic local hashing vectorizer so results are identical on every run.
+
+```bash
+cd course-2-rag-architecture
+pip install -r requirements.txt
+python validate.py   # runs every demo end-to-end; must exit 0
+```
+
+Each demo also runs standalone — see the folder's `README.md` for the
+lesson-by-lesson command map (L13 ingestion, L16–L17 chunking lab, L19–L22
+embeddings lab, L28–L29 hybrid search, L30 reranking demo, L39 evaluation
+harness demo).
+
+## Course mapping (Course 1)
 
 - **Build the case (S1)** → use the ROI framing in `capstone-template/` part 1
 - **Build the system (S2–S6)** → `demo-rag-pipeline/`, `demo-tool-contract/`
