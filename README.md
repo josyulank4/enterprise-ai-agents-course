@@ -64,6 +64,27 @@ lesson-by-lesson command map (L13 ingestion, L16–L17 chunking lab, L19–L22
 embeddings lab, L28–L29 hybrid search, L30 reranking demo, L39 evaluation
 harness demo).
 
+## Skool Course 2 — AI Automation Playbook: From Manual Work to Autonomous Systems (Skool)
+
+**Folder:** `skool-course-2-ai-automation-playbook/`
+
+The complete automation playbook from the Skool-exclusive course: process
+discovery and task mining, engine choice (RPA vs AI-native), workflow
+orchestration, agents as workers, integrations, data pipelines,
+human-in-the-loop oversight, reliability, cost/security/governance, rollout,
+and the autonomous-enterprise capstone. Thirteen runnable demos (s00–s12),
+one per course section — Python standard library only, no API keys, runs
+fully offline.
+
+```bash
+cd skool-course-2-ai-automation-playbook
+pip install -r requirements.txt
+python validate.py   # runs every demo end-to-end; must exit 0 (16/16 checks)
+```
+
+Each demo also runs standalone — see the folder's `README.md` for the
+demo-to-lesson mapping.
+
 ## Course mapping (Course 1)
 
 - **Build the case (S1)** → use the ROI framing in `capstone-template/` part 1
