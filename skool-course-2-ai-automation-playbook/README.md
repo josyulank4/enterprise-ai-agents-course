@@ -10,7 +10,8 @@ No installs, no network calls, no API keys. Every demo runs end to end with
 ## Quickstart
 
 ```bash
-cd ~/workspace/udemy-skool/skool-course-2-ai-automation-playbook/code-repo
+git clone https://github.com/josyulank4/enterprise-ai-agents-course.git
+cd enterprise-ai-agents-course/skool-course-2-ai-automation-playbook
 python validate.py        # runs all 16 numbered checks; writes RESULTS.md
 ```
 
