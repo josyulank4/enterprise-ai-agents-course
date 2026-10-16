@@ -85,6 +85,28 @@ python validate.py   # runs every demo end-to-end; must exit 0 (16/16 checks)
 Each demo also runs standalone — see the folder's `README.md` for the
 demo-to-lesson mapping.
 
+## Skool Course 3 — MCP Architecture: Building Tool-Using AI Systems (Skool)
+
+**Folder:** `skool-course-3-mcp-architecture/`
+
+The hands-on half of the Skool-exclusive MCP course: the Model Context
+Protocol's mechanics in plain Python — real JSON-RPC 2.0 message handling,
+initialize handshakes, tools/resources/prompts, both transports (stdio and
+Streamable HTTP), security gates and injection defense, multi-server
+orchestration, testing suites, production patterns, and the capstone design
+check. Thirteen runnable demos (s01–s13), one per course section — Python
+standard library only, no API keys, runs fully offline (one localhost
+transport demo aside).
+
+```bash
+cd skool-course-3-mcp-architecture
+pip install -r requirements.txt
+python validate.py   # runs every demo end-to-end; must exit 0 (16/16 checks)
+```
+
+Each demo also runs standalone — see the folder's `README.md` for the
+demo-to-lesson mapping.
+
 ## Course mapping (Course 1)
 
 - **Build the case (S1)** → use the ROI framing in `capstone-template/` part 1
