@@ -1,0 +1,102 @@
+"""QC per lesson video (Course 3 s13): streams, decode, blackdetect,
+loudness, duration vs target, 7 QC frames at ~8/22/36/50/64/78/92%."""
+import json
+import os
+import re
+import subprocess
+import sys
+
+COURSE = os.path.expanduser('~/workspace/udemy-skool/skool-course-3-mcp-architecture')
+D = os.path.join(COURSE, 'sections', 's13')
+VIDEOS = os.path.join(COURSE, 'videos')
+QC = os.path.join(D, 'qc')
+os.makedirs(QC, exist_ok=True)
+
+TARGETS = {
+    'l49': ('s13-l49-capstone-studio-design-your-production-mcp-2026-10.mp4', 12.0),
+    'l50': ('s13-l50-course-close-the-durable-principles-and-your-2026-10.mp4', 10.0),
+}
+
+SLIDES = {
+    'l49': ['Title: Capstone Studio \u00b7 Design Your Production MCP Architecture',
+            'The brief: one workflow that dies at the boundary',
+            'The architecture, end to end',
+            'The rubric, part one: design, scope, and security',
+            'The rubric, part two: reliability',
+            'The rubric, part three: testing',
+            'The rubric, part four: operations and governance',
+            'The review discipline: cite your reasons',
+            'Produce the design document'],
+    'l50': ['Title: Course Close \u00b7 The Durable Principles and Your Roadmap',
+            'Tools are contracts; the model is a consumer',
+            'Boundaries, control, and trust',
+            'Defense in depth; behavior is the API',
+            'Build for today, architect for what comes',
+            'Your roadmap: the sequence matters',
+            'Watched, not chased',
+            'The closing frame',
+            'Commit the roadmap'],
+}
+
+
+def run(cmd):
+    return subprocess.run(cmd, capture_output=True, text=True)
+
+
+def dur(p):
+    return float(run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                      '-of', 'csv=p=0', p]).stdout.strip())
+
+
+def check(key):
+    fname, target_min = TARGETS[key]
+    path = os.path.join(VIDEOS, fname)
+    print('====', fname, '====', flush=True)
+    if not os.path.exists(path):
+        print('MISSING')
+        return
+    print('bytes:', os.path.getsize(path))
+    d = dur(path)
+    lo, hi = target_min * 0.9 * 60, target_min * 1.1 * 60
+    print(f'duration {d:.1f}s = {d/60:.2f} min (target {target_min} min, '
+          f'window {lo:.0f}-{hi:.0f}s) -> {"OK" if lo <= d <= hi else "FAIL"}')
+
+    r = run(['ffmpeg', '-v', 'error', '-threads', '2', '-i', path, '-f', 'null', '-'])
+    dec = r.stderr.strip()
+    print('decode:', 'ZERO ERRORS' if not dec else f'FAIL: {dec[:500]}')
+
+    r = run(['ffmpeg', '-hide_banner', '-threads', '2', '-i', path, '-vf',
+             'blackdetect=d=0.5:pix_th=0.10', '-an', '-f', 'null', '-'])
+    blacks = [l for l in r.stderr.splitlines() if 'black_start' in l]
+    print('blackdetect:', 'CLEAN' if not blacks else f'FAIL: {blacks}')
+
+    sv = run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
+              '-show_entries', 'stream=codec_name,width,height,avg_frame_rate',
+              '-of', 'csv=p=0', path]).stdout.strip()
+    sa = run(['ffprobe', '-v', 'error', '-select_streams', 'a:0',
+              '-show_entries', 'stream=codec_name,sample_rate,channels',
+              '-of', 'csv=p=0', path]).stdout.strip()
+    print('video stream:', sv)
+    print('audio stream:', sa)
+
+    r = run(['ffmpeg', '-hide_banner', '-threads', '2', '-i', path, '-af',
+             'loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json', '-vn', '-f', 'null', '-'])
+    m = re.search(r'\{\s*"input_i".*?\}', r.stderr, re.S)
+    if m:
+        j = json.loads(m.group(0))
+        print(f"loudness: integrated {j['input_i']} LUFS, true peak {j['input_tp']} dBTP")
+    else:
+        print('loudness: MEASURE FAILED')
+
+    for i in range(7):
+        t = d * [0.08, 0.22, 0.36, 0.50, 0.64, 0.78, 0.92][i]
+        out = os.path.join(QC, f'{key}-qcframe{i+1}-t{int(t)}s.png')
+        run(['ffmpeg', '-y', '-v', 'error', '-ss', str(t), '-i', path,
+             '-frames:v', '1', out])
+        print(f'  frame {i+1} @ {t:.1f}s -> {os.path.basename(out)}')
+
+
+if __name__ == '__main__':
+    keys = [sys.argv[1]] if len(sys.argv) > 1 else list(TARGETS)
+    for k in keys:
+        check(k)
