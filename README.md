@@ -5,6 +5,29 @@ Technologies). This one repo serves both the Udemy and Skool programs:
 every demo from every course runs here — no stubs, no slides-only code.
 Clone it, run it, adapt it to your own enterprise.
 
+## Find your course — start here
+
+One repo, four courses. Find yours, open its folder, run its validator:
+
+| Your course | Platform | Your folder | What the code does | Verify it runs |
+|-------------|----------|-------------|--------------------|----------------|
+| **Course 1 — Enterprise AI Agents: From Pilot to Production** | Udemy | Four demo folders + capstone template (table in the Course 1 section below) | The course's lesson demos: a RAG pipeline, a tool-contract design, an eval suite with CI gate, and the capstone design template | Per-folder commands in the Course 1 quickstart below |
+| **Course 2 — RAG Architecture: Production-Grade Retrieval Systems** | Udemy | [`course-2-rag-architecture/`](course-2-rag-architecture/) | The full production RAG pipeline: ingestion, chunking, embeddings, hybrid search, reranking, evaluation harness | `cd course-2-rag-architecture && python validate.py` |
+| **Skool Course 2 — AI Automation Playbook: From Manual Work to Autonomous Systems** | Skool | [`skool-course-2-ai-automation-playbook/`](skool-course-2-ai-automation-playbook/) | 13 runnable automation demos (s00–s12), one per course section | `cd skool-course-2-ai-automation-playbook && python validate.py` |
+| **Skool Course 3 — MCP Architecture: Building Tool-Using AI Systems** | Skool | [`skool-course-3-mcp-architecture/`](skool-course-3-mcp-architecture/) | 13 runnable MCP demos (s01–s13), one per course section | `cd skool-course-3-mcp-architecture && python validate.py` |
+
+Two more things at the repo root, so nothing looks mysterious:
+
+- **`mcp_manifest.json`** — a sample output file, not course input: it is the
+  MCP tool manifest written by the Course 1 Lesson 21 demo
+  (`demo-tool-contract/demo.py`) when that demo is run from the repo root —
+  a worked example of the manifest format the lesson teaches. The demo
+  regenerates it on every run.
+- **[`production-tooling/`](production-tooling/)** — *not student code.* This
+  is the pipeline that produces the course videos (assembly + QC). Students
+  belong in the course folders above; this folder is kept here only so the
+  working production code lives in version control too.
+
 ## Course 1 — Enterprise AI Agents: From Pilot to Production (Udemy)
 
 ### What's inside (Course 1)
