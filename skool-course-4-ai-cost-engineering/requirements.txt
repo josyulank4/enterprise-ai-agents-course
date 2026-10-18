@@ -1,0 +1,7 @@
+# This project uses the Python standard library ONLY.
+#
+# There is intentionally nothing to install: every demo runs with
+# `python demo.py` on Python 3.10+ using only stdlib modules
+# (json, re, math, collections, pathlib, subprocess, sys).
+# Keeping the dependency list empty is a course lesson in itself —
+# cost-engineering patterns should be copyable, not installable.

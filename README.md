@@ -7,7 +7,7 @@ Clone it, run it, adapt it to your own enterprise.
 
 ## Find your course — start here
 
-One repo, four courses. Find yours, open its folder, run its validator:
+One repo, five courses. Find yours, open its folder, run its validator:
 
 | Your course | Platform | Your folder | What the code does | Verify it runs |
 |-------------|----------|-------------|--------------------|----------------|
@@ -15,6 +15,7 @@ One repo, four courses. Find yours, open its folder, run its validator:
 | **Course 2 — RAG Architecture: Production-Grade Retrieval Systems** | Udemy | [`course-2-rag-architecture/`](course-2-rag-architecture/) | The full production RAG pipeline: ingestion, chunking, embeddings, hybrid search, reranking, evaluation harness | `cd course-2-rag-architecture && python validate.py` |
 | **Skool Course 2 — AI Automation Playbook: From Manual Work to Autonomous Systems** | Skool | [`skool-course-2-ai-automation-playbook/`](skool-course-2-ai-automation-playbook/) | 13 runnable automation demos (s00–s12), one per course section | `cd skool-course-2-ai-automation-playbook && python validate.py` |
 | **Skool Course 3 — MCP Architecture: Building Tool-Using AI Systems** | Skool | [`skool-course-3-mcp-architecture/`](skool-course-3-mcp-architecture/) | 13 runnable MCP demos (s01–s13), one per course section | `cd skool-course-3-mcp-architecture && python validate.py` |
+| **Skool Course 4 — AI Cost Engineering: Control Production AI Spend** | Skool | [`skool-course-4-ai-cost-engineering/`](skool-course-4-ai-cost-engineering/) | 13 runnable cost-engineering demos (s01–s13), one per course section | `cd skool-course-4-ai-cost-engineering && python validate.py` |
 
 Two more things at the repo root, so nothing looks mysterious:
 
@@ -124,6 +125,26 @@ transport demo aside).
 ```bash
 cd skool-course-3-mcp-architecture
 pip install -r requirements.txt
+python validate.py   # runs every demo end-to-end; must exit 0 (16/16 checks)
+```
+
+Each demo also runs standalone — see the folder's `README.md` for the
+demo-to-lesson mapping.
+
+## Skool Course 4 — AI Cost Engineering: Control Production AI Spend (Skool)
+
+**Folder:** `skool-course-4-ai-cost-engineering/`
+
+The hands-on half of the Skool-exclusive cost course: where production AI
+spend actually goes and how to control it — bill decomposition, token
+economics, model routing, caching and batching math, bounded-agent cost
+caps, the self-hosting break-even, attribution, budget guards, the savings
+playbook, unit economics, and a full cost audit. Thirteen runnable demos
+(s01–s13), one per course section — Python standard library only, no API
+keys, runs fully offline.
+
+```bash
+cd skool-course-4-ai-cost-engineering
 python validate.py   # runs every demo end-to-end; must exit 0 (16/16 checks)
 ```
 
