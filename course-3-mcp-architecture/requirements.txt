@@ -1,3 +1,0 @@
-# No third-party dependencies for the pilot modules.
-# The Course 3 demos run on the Python 3.11+ standard library only,
-# so results are identical on every machine with zero setup.
